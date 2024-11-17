@@ -12,13 +12,37 @@ function loadKnights() {
   const knights = JSON.parse(localStorage.getItem('knights')) || [];
   const knightList = document.getElementById('knight-list');
   knightList.innerHTML = '';
-  knights.forEach((knight, index) => {
-    const levelText = levelMapping[knight.level];
-    const li = document.createElement('li');
-    li.textContent = `${levelText} ${knight.name} - ${knight.health} Hälsa - ${knight.points} Poäng`;
-    li.addEventListener('click', () => showKnightDetails(index));
-    knightList.appendChild(li);
-  });
+
+  // Group knights by playing group
+  const playingGroups = knights.reduce((acc, knight, index) => {
+    const playingGroup = knight.playingGroup || 'Okänd spelargrupp';
+    if (!acc[playingGroup]) {
+      acc[playingGroup] = [];
+    }
+    acc[playingGroup].push({ knight, index });
+    return acc;
+  }, {});
+
+  // Display knights grouped by playing group
+  for (const [playingGroup, groupKnights] of Object.entries(playingGroups)) {
+    const groupHeader = document.createElement('h3');
+    groupHeader.textContent = playingGroup;
+    knightList.appendChild(groupHeader);
+
+    groupKnights.forEach(({ knight, index }) => {
+      const levelText = levelMapping[knight.level];
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${levelText} ${knight.name} - ${knight.health} Hälsa - ${knight.points} Poäng
+        <div style="display: flex; gap: 10px;">
+          <span>Kampanj: ${knight.campaign || 'Ingen kampanj'}</span>
+          <span>Uppdrag: ${knight.scenario || 'Inget uppdrag'}</span>
+        </div>
+      `;
+      li.addEventListener('click', () => showKnightDetails(index));
+      knightList.appendChild(li);
+    });
+  }
 }
 
 // Function to show the knight form
@@ -35,7 +59,7 @@ function addKnight() {
 
   if (name && level && health) {
     const knights = JSON.parse(localStorage.getItem('knights')) || [];
-    knights.push({ name, level, health, 'points': 0, 'equipment': ['Svärd'] })
+    knights.push({ name, level, health, 'points': 0, 'equipment': ['Svärd'], 'campaign': 'Isdrakens skatt', 'scenario': '' })
     localStorage.setItem('knights', JSON.stringify(knights));
     loadKnights();
     document.getElementById('knight-form').style.display = 'none';
@@ -52,7 +76,23 @@ function showKnightDetails(index) {
   const equipmentList = knight.equipment.map(item => `<li>${item}</li>`).join('');
 
   document.getElementById('knight-info').innerHTML = `
-    <h2>${knight.name}</h2>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <h2>${knight.name}</h2>
+      <div style="display: flex; gap: 5px; align-items: center;">
+        <label for="playing-group">Spelargrupp</label>
+        <input type="text" id="playing-group" value="${knight.playingGroup || ''}">
+      </div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+      <div>
+        <label for="campaign">Kampanj</label>
+        <input type="text" id="campaign" value="${knight.campaign || ''}">
+      </div>
+      <div>
+        <label for="scenario">Uppdrag</label>
+        <input type="text" id="scenario" value="${knight.scenario || ''}">
+      </div>
+    </div>
     <div style="display: flex; justify-content: space-between;">
       <h3>Nivå</h3>
       <h3>Hälsa</h3>
@@ -77,6 +117,21 @@ function showKnightDetails(index) {
   document.getElementById('knight-list').style.display = 'none';
   document.getElementById('add-knight').style.display = 'none';
   document.getElementById('knight-details').style.display = 'block';
+
+  document.getElementById('playing-group').onchange = (event) => {
+    knight.playingGroup = event.target.value;
+    saveAndUpdate();
+  };
+
+  document.getElementById('campaign').onchange = (event) => {
+    knight.campaign = event.target.value;
+    saveAndUpdate();
+  };
+
+  document.getElementById('scenario').onchange = (event) => {
+    knight.scenario = event.target.value;
+    saveAndUpdate();
+  };
 
   document.getElementById('level-increase').onclick = () => {
     if (knight.level < 5) {
