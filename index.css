@@ -134,10 +134,7 @@ ul {
 }
 
 /* Media queries for mobile devices */
-@media only screen and (-webkit-min-device-pixel-ratio: 2.6),
-only screen and (-min--moz-device-pixel-ratio: 2.6),
-only screen and (-o-min-device-pixel-ratio: 2.6/1),
-only screen and (min-device-pixel-ratio: 2.6) {
+@media (max-width: 1080px) {
     body {
         padding: 10px;
         height: auto;
@@ -181,6 +178,10 @@ only screen and (min-device-pixel-ratio: 2.6) {
     }
 
     #knight-details .playing-group {
-        width: 100%; /* Ensure playing-group takes full width */
+        width: 55%; /* Ensure playing-group takes full width */
+    }
+
+    #knight-details .campaign-scenarion {
+        width: 90%; /* Ensure playing-group takes full width */
     }
 }

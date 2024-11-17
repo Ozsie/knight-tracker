@@ -39,17 +39,17 @@ export function showKnightDetails(index) {
       <h2>${knight.name}</h2>
       <div style="display: flex; gap: 5px; align-items: center;">
         <label for="playing-group">Spelargrupp</label>
-        <input type="text" id="playing-group" value="${knight.playingGroup || ''}">
+        <input type="text" class="playing-group" id="playing-group" value="${knight.playingGroup || ''}">
       </div>
     </div>
     <div style="display: flex; gap: 10px;">
       <div>
         <label for="campaign">Kampanj</label>
-        <input type="text" id="campaign" value="${knight.campaign || ''}">
+        <input type="text" class="campaign-scenarion" id="campaign" value="${knight.campaign || ''}">
       </div>
       <div>
         <label for="scenario">Uppdrag</label>
-        <input type="text" id="scenario" value="${knight.scenario || ''}">
+        <input type="text" class="campaign-scenarion" id="scenario" value="${knight.scenario || ''}">
       </div>
     </div>
     <div style="display: flex; justify-content: space-between;">
