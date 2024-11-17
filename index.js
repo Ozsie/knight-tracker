@@ -23,6 +23,7 @@ function loadKnights() {
 
 // Function to show the knight form
 function showKnightForm() {
+  document.getElementById('add-knight').style.display = 'none';
   document.getElementById('knight-form').style.display = 'block';
 }
 
@@ -51,49 +52,93 @@ function showKnightDetails(index) {
   const equipmentList = knight.equipment.map(item => `<li>${item}</li>`).join('');
 
   document.getElementById('knight-info').innerHTML = `
-    <p>${knight.name}</p>
+    <h2>${knight.name}</h2>
     <div style="display: flex; justify-content: space-between;">
-      <span>Nivå</span>
-      <span>Hälsa</span>
+      <h3>Nivå</h3>
+      <h3>Hälsa</h3>
     </div>
     <div style="display: flex; justify-content: space-between;">
-      <span>${levelText} (${knight.points})</span>
-      <span>${knight.health}</span>
+      <span>
+        ${levelText} (${knight.points})
+        <button id="level-decrease" class="small-button">-</button>
+        <button id="level-increase" class="small-button">+</button>
+      </span>
+      <span>
+        <button id="health-decrease" class="small-button">-</button>
+        <button id="health-increase" class="small-button">+</button>
+        ${knight.health}
+      </span>
     </div>
-    <p>Utrustning:</p>
+    <h3>Utrustning</h3>
+    <input type="text" id="new-equipment" placeholder="Lägg till utrustning">
+    <button id="add-equipment" class="small-button">Lägg till</button>
     <ul>${equipmentList}</ul>
   `;
   document.getElementById('knight-list').style.display = 'none';
   document.getElementById('add-knight').style.display = 'none';
   document.getElementById('knight-details').style.display = 'block';
 
-  document.getElementById('edit-knight').onclick = () => {
-    document.getElementById('knight-info').innerHTML = `
-      <p>Name: ${knight.name}</p>
-      <div style="display: flex; justify-content: space-between;">
-        <span>Level: <select id="edit-knight-level">
-          <option value="1" ${knight.level === 1 ? 'selected' : ''}>Väpnare</option>
-          <option value="2" ${knight.level === 2 ? 'selected' : ''}>Riddare</option>
-          <option value="3" ${knight.level === 3 ? 'selected' : ''}>Hjälte</option>
-          <option value="4" ${knight.level === 4 ? 'selected' : ''}>Furste</option>
-          <option value="5" ${knight.level === 5 ? 'selected' : ''}>Mästare</option>
-        </select>, Poäng: <input type="number" id="edit-knight-points" value="${knight.points}"></span>
-        <span>Hälsa: <input type="number" id="edit-knight-health" value="${knight.health}"></span>
-      </div>
-      <p>Utrustning: <input type="text" id="edit-knight-equipment" value="${knight.equipment.join(', ')}"></p>
-      <button id="save-edits">Spara ändringar</button>
-    `;
-
-    document.getElementById('save-edits').onclick = () => {
-      knight.level = document.getElementById('edit-knight-level').value;
-      knight.health = document.getElementById('edit-knight-health').value;
-      knight.points = document.getElementById('edit-knight-points').value;
-      knight.equipment = document.getElementById('edit-knight-equipment').value.split(',').map(item => item.trim());
-      knights[index] = knight;
-      localStorage.setItem('knights', JSON.stringify(knights));
-      showKnightDetails(index);
-    };
+  document.getElementById('level-increase').onclick = () => {
+    if (knight.level < 5) {
+      knight.points++;
+      if (knight.points >= 28) {
+        knight.level = 5;
+      } else if (knight.points >= 18) {
+        knight.level = 4;
+      } else if (knight.points >= 10) {
+        knight.level = 3;
+      } else if (knight.points >= 4) {
+        knight.level = 2;
+      }
+      saveAndUpdate();
+    }
   };
+
+  document.getElementById('level-decrease').onclick = () => {
+    if (knight.points > 1) {
+      knight.points--;
+      if (knight.points >= 28) {
+        knight.level = 5;
+      } else if (knight.points >= 18) {
+        knight.level = 4;
+      } else if (knight.points >= 10) {
+        knight.level = 3;
+      } else if (knight.points >= 4) {
+        knight.level = 2;
+      } else {
+        knight.level = 1;
+      }
+      saveAndUpdate();
+    }
+  };
+
+  document.getElementById('health-increase').onclick = () => {
+    if (knight.health < 7) {
+      knight.health++;
+      saveAndUpdate();
+    }
+  };
+
+  document.getElementById('health-decrease').onclick = () => {
+    if (knight.health > 1) {
+      knight.health--;
+      saveAndUpdate();
+    }
+  };
+
+  document.getElementById('add-equipment').onclick = () => {
+    const newEquipment = document.getElementById('new-equipment').value;
+    if (newEquipment) {
+      knight.equipment.push(newEquipment);
+      saveAndUpdate();
+    }
+  };
+
+  function saveAndUpdate() {
+    knights[index] = knight;
+    localStorage.setItem('knights', JSON.stringify(knights));
+    showKnightDetails(index);
+  }
 }
 
 // Function to go back to the list
@@ -101,6 +146,7 @@ function backToList() {
   document.getElementById('knight-details').style.display = 'none';
   document.getElementById('knight-list').style.display = 'block';
   document.getElementById('add-knight').style.display = 'block';
+  loadKnights();
 }
 
 // Load knights when the page loads
