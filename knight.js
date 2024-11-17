@@ -13,10 +13,11 @@ export function addKnight() {
   const name = document.getElementById('knight-name').value;
   const level = document.getElementById('knight-level').value;
   const health = document.getElementById('knight-health').value;
+  const color = document.getElementById('knight-color').value;
 
   if (name && level && health) {
     const knights = loadKnights();
-    knights.push({ name, level, health, 'points': 0, 'equipment': ['Svärd'], 'campaign': 'Isdrakens skatt', 'scenario': '' });
+    knights.push({ name, level, health, color, 'points': 0, 'equipment': ['Svärd'], 'campaign': 'Isdrakens skatt', 'scenario': '' });
     saveKnights(knights);
     displayKnights(knights);
     document.getElementById('knight-form').style.display = 'none';
@@ -32,7 +33,7 @@ export function showKnightDetails(index) {
   const knights = loadKnights();
   const knight = knights[index];
   const levelText = levelMapping[knight.level];
-  const equipmentList = knight.equipment.map((item, i) => `<li><button class="small-button remove-equipment" data-index="${i}">🗑</button> ${item}</li>`).join('');
+  const equipmentList = knight.equipment.map((item, i) => `<li><button class="small-button delete-knight remove-equipment" data-index="${i}">-</button> ${item}</li>`).join('');
 
   document.getElementById('knight-info').innerHTML = `
     <div style="display: flex; gap: 10px; align-items: center;">

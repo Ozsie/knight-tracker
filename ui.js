@@ -22,6 +22,9 @@ export function displayKnights(knights) {
     groupKnights.forEach(({ knight, index }) => {
       const levelText = levelMapping[knight.level];
       const li = document.createElement('li');
+      const color = knight.color || 'white';
+      li.className = "knight-item";
+      li.style.setProperty(`--knight-color`, color);
       li.innerHTML = `
         ${levelText} ${knight.name} - ${knight.health} Hälsa - ${knight.points} Poäng
         <div style="display: flex; gap: 10px;">
