@@ -134,7 +134,10 @@ ul {
 }
 
 /* Media queries for mobile devices */
-@media (max-width: 1100px) {
+@media only screen and (-webkit-min-device-pixel-ratio: 2.6),
+only screen and (-min--moz-device-pixel-ratio: 2.6),
+only screen and (-o-min-device-pixel-ratio: 2.6/1),
+only screen and (min-device-pixel-ratio: 2.6) {
     body {
         padding: 10px;
         height: auto;
