@@ -11,7 +11,17 @@ body {
     height: 100vh;
 }
 
-h1, h2, h3 {
+h1 {
+    color: #b8860b;
+    text-shadow: 2px 2px 4px #000000;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    text-align: center; /* Center the text */
+    white-space: nowrap; /* Prevent text from wrapping */
+    font-size: calc(20px + 1vw); /* Adjust font size based on viewport width */
+}
+
+h2, h3 {
     color: #b8860b;
     text-shadow: 2px 2px 4px #000000;
     margin-bottom: 5px;
@@ -93,17 +103,17 @@ ul {
 }
 
 .small-button {
-     background-color: #4b4b4b;
-     color: #d3d3d3;
-     border: 1px solid #b8860b;
-     padding: 2px 5px;
-     cursor: pointer;
-     margin-left: 5px;
-     border-radius: 3px;
-     font-size: 12px;
-     min-width: 20px; /* Set the minimum width */
-     text-align: center; /* Center the text */
- }
+    background-color: #4b4b4b;
+    color: #d3d3d3;
+    border: 1px solid #b8860b;
+    padding: 2px 5px;
+    cursor: pointer;
+    margin-left: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    min-width: 20px; /* Set the minimum width */
+    text-align: center; /* Center the text */
+}
 
 .small-button:hover {
     background-color: #6b6b6b;
@@ -121,4 +131,48 @@ ul {
 
 .delete-knight:hover {
     background-color: #ff1a1a;
+}
+
+/* Media queries for mobile devices */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        height: auto;
+    }
+
+    #knight-form, #knight-details {
+        width: 90%; /* Set width to 90% of the display */
+        padding: 10px;
+        margin: 0 auto; /* Center the element */
+    }
+
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .form-group input, .form-group select {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .small-button {
+        width: auto;
+        padding: 5px;
+    }
+
+    #knight-list li {
+        padding: 10px;
+        margin: 5px 0;
+    }
 }
