@@ -1,6 +1,6 @@
 // ui.js
 import { showKnightDetails, levelMapping } from './knight.js';
-import { loadKnights } from './storage.js';
+import { loadKnights, saveKnights } from './storage.js';
 
 export function displayKnights(knights) {
   const knightList = document.getElementById('knight-list');
@@ -28,11 +28,20 @@ export function displayKnights(knights) {
         <div style="display: flex; gap: 10px;">
           <span>Kampanj: ${knight.campaign || 'Ingen kampanj'} - ${knight.scenario || 'Inget uppdrag'}</span>
         </div>
+        <button class="delete-knight">Ta bort</button>
       `;
+      li.querySelector('.delete-knight').addEventListener('click', () => deleteKnight(index));
       li.addEventListener('click', () => showKnightDetails(index));
       knightList.appendChild(li);
     });
   }
+}
+
+function deleteKnight(index) {
+  const knights = loadKnights();
+  knights.splice(index, 1);
+  saveKnights(knights);
+  displayKnights(knights);
 }
 
 export function showKnightForm() {

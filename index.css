@@ -108,3 +108,17 @@ ul {
 .small-button:hover {
     background-color: #6b6b6b;
 }
+
+.delete-knight {
+    font-size: 0.8em;
+    padding: 5px 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.delete-knight:hover {
+    background-color: #ff1a1a;
+}
