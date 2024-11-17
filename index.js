@@ -7,6 +7,51 @@ const levelMapping = {
   5: 'Mästare'
 };
 
+// Function to search knights by name
+function searchKnights() {
+  const searchQuery = document.getElementById('search-input').value.toLowerCase();
+  const knights = JSON.parse(localStorage.getItem('knights')) || [];
+  const filteredKnights = knights.filter(knight => knight.name.toLowerCase().includes(searchQuery));
+  displayKnights(filteredKnights);
+}
+
+// Function to display knights
+function displayKnights(knights) {
+  const knightList = document.getElementById('knight-list');
+  knightList.innerHTML = '';
+
+  // Group knights by playing group
+  const playingGroups = knights.reduce((acc, knight, index) => {
+    const playingGroup = knight.playingGroup || 'Okänd spelargrupp';
+    if (!acc[playingGroup]) {
+      acc[playingGroup] = [];
+    }
+    acc[playingGroup].push({ knight, index });
+    return acc;
+  }, {});
+
+  // Display knights grouped by playing group
+  for (const [playingGroup, groupKnights] of Object.entries(playingGroups)) {
+    const groupHeader = document.createElement('h3');
+    groupHeader.textContent = playingGroup;
+    knightList.appendChild(groupHeader);
+
+    groupKnights.forEach(({ knight, index }) => {
+      const levelText = levelMapping[knight.level];
+      const li = document.createElement('li');
+      li.innerHTML = `
+        ${levelText} ${knight.name} - ${knight.health} Hälsa - ${knight.points} Poäng
+        <div style="display: flex; gap: 10px;">
+          <span>Kampanj: ${knight.campaign || 'Ingen kampanj'}</span>
+          <span>Uppdrag: ${knight.scenario || 'Inget uppdrag'}</span>
+        </div>
+      `;
+      li.addEventListener('click', () => showKnightDetails(index));
+      knightList.appendChild(li);
+    });
+  }
+}
+
 // Function to load knights from local storage
 function loadKnights() {
   const knights = JSON.parse(localStorage.getItem('knights')) || [];
@@ -206,6 +251,10 @@ function backToList() {
 
 // Load knights when the page loads
 window.onload = () => {
+  // Add search input to HTML
+  document.body.insertAdjacentHTML('afterbegin', `
+  <input type="text" id="search-input" placeholder="Search knights" oninput="searchKnights()">
+`);
   document.getElementById('add-knight').addEventListener('click', showKnightForm);
   document.getElementById('save-knight').addEventListener('click', addKnight);
   document.getElementById('back-to-list').addEventListener('click', backToList);
