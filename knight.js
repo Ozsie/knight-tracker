@@ -21,6 +21,9 @@ export function addKnight() {
     saveKnights(knights);
     displayKnights(knights);
     document.getElementById('knight-form').style.display = 'none';
+    document.getElementById('knight-list').style.display = 'block';
+    document.getElementById('add-knight').style.display = 'block';
+    document.getElementById('search-div').style.display = 'block';
   } else {
     alert('Alla fält måste fyllas i');
   }
