@@ -134,7 +134,7 @@ ul {
 }
 
 /* Media queries for mobile devices */
-@media (max-width: 600px) {
+@media (max-width: 1024px) {
     body {
         padding: 10px;
         height: auto;
