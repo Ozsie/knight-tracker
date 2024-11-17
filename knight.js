@@ -1,4 +1,3 @@
-// knight.js
 import { loadKnights, saveKnights } from './storage.js';
 import { displayKnights } from './ui.js';
 
@@ -33,7 +32,7 @@ export function showKnightDetails(index) {
   const knights = loadKnights();
   const knight = knights[index];
   const levelText = levelMapping[knight.level];
-  const equipmentList = knight.equipment.map(item => `<li>${item}</li>`).join('');
+  const equipmentList = knight.equipment.map((item, i) => `<li><button class="small-button remove-equipment" data-index="${i}">🗑</button> ${item}</li>`).join('');
 
   document.getElementById('knight-info').innerHTML = `
     <div style="display: flex; gap: 10px; align-items: center;">
@@ -71,7 +70,7 @@ export function showKnightDetails(index) {
     </div>
     <h3>Utrustning</h3>
     <input type="text" id="new-equipment" placeholder="Lägg till utrustning">
-    <button id="add-equipment" class="small-button">Lägg till</button>
+    <button id="add-equipment" class="small-button">+</button>
     <ul>${equipmentList}</ul>
   `;
   document.getElementById('knight-list').style.display = 'none';
@@ -149,6 +148,14 @@ export function showKnightDetails(index) {
       saveAndUpdate();
     }
   };
+
+  document.querySelectorAll('.remove-equipment').forEach(button => {
+    button.onclick = () => {
+      const equipmentIndex = button.getAttribute('data-index');
+      knight.equipment.splice(equipmentIndex, 1);
+      saveAndUpdate();
+    };
+  });
 
   function saveAndUpdate() {
     knights[index] = knight;
