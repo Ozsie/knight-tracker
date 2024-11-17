@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riddarspårare</title>
+</head>
+<body>
+<h1>Välkommen till Riddarspårare</h1>
+<ul id="knight-list"></ul>
+<button id="add-knight">Lägg till riddare</button>
+
+<div id="knight-form" style="display: none;">
+    <h2>Lägg till en ny riddare</h2>
+    <label for="knight-name">Namn:</label>
+    <input type="text" id="knight-name">
+    <label for="knight-level">Nivå:</label>
+    <select id="knight-level">
+        <option value="1" selected>Väpnare</option>
+        <option value="2">Riddare</option>
+        <option value="3">Hjälte</option>
+        <option value="4">Furste</option>
+        <option value="5">Mästare</option>
+    </select>
+    <label for="knight-health">Hälsa:</label>
+    <input type="number" id="knight-health">
+    <button id="save-knight">Spara riddare</button>
+</div>
+
+<div id="knight-details" style="display: none;">
+    <h2>Riddardetaljer</h2>
+    <p id="knight-info"></p>
+    <button id="edit-knight">Redigera riddare</button>
+    <button id="back-to-list">Tillbaka till listan</button>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>
