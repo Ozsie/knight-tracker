@@ -45,13 +45,18 @@ function deleteKnight(index) {
 }
 
 export function showKnightForm() {
+  document.getElementById('search-div').style.display = 'none';
   document.getElementById('add-knight').style.display = 'none';
+  document.getElementById('knight-details').style.display = 'none';
+  document.getElementById('knight-list').style.display = 'none';
   document.getElementById('knight-form').style.display = 'block';
 }
 
 export function backToList() {
+  document.getElementById('search-div').style.display = 'block';
   document.getElementById('knight-details').style.display = 'none';
   document.getElementById('knight-list').style.display = 'block';
   document.getElementById('add-knight').style.display = 'block';
+  document.getElementById('knight-form').style.display = 'none'; // Hide the knight form
   displayKnights(loadKnights());
 }

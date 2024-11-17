@@ -18,6 +18,7 @@ window.onload = () => {
   document.getElementById('search-input').oninput = searchKnights;
   document.getElementById('add-knight').addEventListener('click', showKnightForm);
   document.getElementById('save-knight').addEventListener('click', addKnight);
+  document.getElementById('cancel-knight').addEventListener('click', backToList); // Add this line
   document.getElementById('back-to-list').addEventListener('click', backToList);
   displayKnights(loadKnights());
 };

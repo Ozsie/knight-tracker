@@ -8,8 +8,10 @@
 </head>
 <body>
 <h1>Välkommen till Riddarspårare</h1>
-<label for="search-input">Sök riddare</label>
-<input type="text" id="search-input" placeholder="Sök riddare" style="display: none;">
+<div id="search-div">
+    <label for="search-input">Sök riddare</label>
+    <input type="text" id="search-input" placeholder="Sök riddare" style="display: none;">
+</div>
 <ul id="knight-list"></ul>
 <button id="add-knight">Lägg till riddare</button>
 
@@ -34,6 +36,7 @@
         <input type="number" id="knight-health" value="7" max="7" min="1">
     </div>
     <button id="save-knight">Spara riddare</button>
+    <button id="cancel-knight">Avbryt</button> <!-- Add this line -->
 </div>
 
 <div id="knight-details" style="display: none;">

@@ -73,6 +73,7 @@ export function showKnightDetails(index) {
   `;
   document.getElementById('knight-list').style.display = 'none';
   document.getElementById('add-knight').style.display = 'none';
+  document.getElementById('search-div').style.display = 'none';
   document.getElementById('knight-details').style.display = 'block';
 
   document.getElementById('playing-group').onchange = (event) => {
