@@ -1,4 +1,3 @@
-// ui.js
 import { showKnightDetails, levelMapping } from './knight.js';
 import { loadKnights, saveKnights } from './storage.js';
 
@@ -38,10 +37,12 @@ export function displayKnights(knights) {
 }
 
 function deleteKnight(index) {
-  const knights = loadKnights();
-  knights.splice(index, 1);
-  saveKnights(knights);
-  displayKnights(knights);
+  if (confirm('Är du säker på att du vill ta bort riddaren?')) {
+    const knights = loadKnights();
+    knights.splice(index, 1);
+    saveKnights(knights);
+    displayKnights(knights);
+  }
 }
 
 export function showKnightForm() {
