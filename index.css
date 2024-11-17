@@ -152,6 +152,7 @@ only screen and (min-device-pixel-ratio: 2.6) {
     .form-group {
         flex-direction: column;
         align-items: flex-start;
+        width: 100%; /* Ensure form-group takes full width */
     }
 
     .form-group label {
@@ -161,7 +162,7 @@ only screen and (min-device-pixel-ratio: 2.6) {
     }
 
     .form-group input, .form-group select {
-        width: 100%;
+        width: 100%; /* Ensure inputs and selects take full width */
     }
 
     button {
@@ -177,5 +178,9 @@ only screen and (min-device-pixel-ratio: 2.6) {
     #knight-list li {
         padding: 10px;
         margin: 5px 0;
+    }
+
+    #knight-details .playing-group {
+        width: 100%; /* Ensure playing-group takes full width */
     }
 }
